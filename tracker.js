@@ -27,13 +27,36 @@ connection.connect(function(err) {
         type: "list",
         choices: [
             "View Departments",
-            "Add Departments",
+            "Add Department",
             "View Employees",
-            "Add Employees",
+            "Add Employee",
             "Update Employee Role",
             "Add Role",
             "Exit"
         ],
         name: "choice"
+    }).then(answers => {
+        console.log(answers.choice + "it is!");
+        switch (answers.choice) {
+            case "View Departments":
+                viewDepartments()
+                break;
+            case "Add Department":
+                addDepartment()
+                break;
+            case "View Employees":
+                viewEmployees()
+                break;
+            case "Add Employee":
+                addEmployee()
+                break;
+            case "Update Employee Role":
+                updateEmployeeRole()
+                 break;
+            case "Add Role":
+                addRole()
+                break;
+
+        }
     })
   }
