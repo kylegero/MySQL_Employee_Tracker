@@ -22,5 +22,18 @@ connection.connect(function(err) {
   });
 
   function trackerQuestions(){
-
+    inquirer.prompt({
+        message: "Please select an action",
+        type: "list",
+        choices: [
+            "View Departments",
+            "Add Departments",
+            "View Employees",
+            "Add Employees",
+            "Update Employee Role",
+            "Add Role",
+            "Exit"
+        ],
+        name: "choice"
+    })
   }
