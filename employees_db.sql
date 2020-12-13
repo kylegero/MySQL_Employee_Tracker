@@ -7,3 +7,7 @@ CREATE TABLE department (
     name VARCHAR(50),
     department_id INT(20)
 );
+
+CREATE TABLE role (
+    
+)
