@@ -14,3 +14,8 @@ var connection = mysql.createConnection({
   password: "",
   database: "employees_db"
 });
+
+connection.connect(function(err) {
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId);
+  });
