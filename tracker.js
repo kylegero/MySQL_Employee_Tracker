@@ -76,3 +76,9 @@ connection.connect(function(err) {
       })
   }
 
+function viewEmployees() {
+    connection.query("Select * from employee", function (err, data) {
+        console.table(data);
+        trackerQuestions();
+    })
+}
