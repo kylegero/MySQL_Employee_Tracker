@@ -82,3 +82,50 @@ function viewEmployees() {
         trackerQuestions();
     })
 }
+
+function addEmployee() {
+    inquirer.prompt([{
+        type: "input",
+        name: "firstName",
+        message: "Please enter the first name of the employee you wish to add"
+},
+{
+    type: "input",
+    name: "lastName",
+    message: "Please enter the last name of the employee you wish to add"
+
+}
+{
+    type: "input",
+    name: "roleId",
+    message: "Please enter the role ID of the employee you wish to add"
+},
+{
+    type: "number",
+    name: "managerId",
+    message: "Please enter the ID of the manager of the employee you wish to add"
+}]).then(function(res) {
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id") VALUES (?, ?, ?, ?), [res.firstName, res.lastName, res.roleId, res.managerId], function(err, data) {
+        if (err) throw err;
+        console.table("Success!");
+        trackerQuestions();
+    }
+})
+}
+
+function updateEmployeeRole() {
+    inquirer.prompt([
+        {
+         message: "Please enter the first name of the employee you wish to update",
+         type: "input",
+         name: "name"   
+        },
+        {
+            message: "Please enter the role ID you wish to update:",
+            type: "number",
+            name: "role_id"
+        }
+    ]).then(function (response) {
+        connection.query("")
+    })
+}
