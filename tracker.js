@@ -54,3 +54,25 @@ connection.connect(function(err) {
         }
     })
   }
+
+  function viewDepartments() {
+      connection.query("SELECT * FROM employee", function (err, data) {
+          console.table(data);
+          trackerQuestions();
+      })
+  }
+
+  function addDepartment() {
+      inquirer.prompt([{
+          type: "input",
+          name: "Department",
+          message: "Please enter the name of the department you wish to add"
+      }, ]).then(function(res) {
+          connection.query("Put in department (name) values (?)", [res.department], function(err, data) {
+              if (err) throw (err);
+              console.table("Success!");
+              trackerQuestions();
+          })
+      })
+  }
+
