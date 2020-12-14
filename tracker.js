@@ -121,11 +121,37 @@ function updateEmployeeRole() {
          name: "name"   
         },
         {
-            message: "Please enter the role ID you wish to update:",
+            message: "Please enter the role ID you wish to update",
             type: "number",
             name: "role_id"
         }
     ]).then(function (response) {
-        connection.query("")
+        connection.query("UPDATE employee SET role_id = ? WHERE first_name = ?", [response.role_id, response.name], function (err, data){
+            console.table(data);
+        })
+    })
+}
+function addRole() {
+    inquirer.prompt([
+        {
+            message: "Please enter the title of the role you wish to add",
+            type: "input",
+            name: "title"
+        },
+        {
+            message: "Please enter the salary of the role you wish to add",
+            type: "number",
+            name: "salary"
+        },
+        {
+            message: "Please enter the department ID of the role you wish to add",
+            type: "number",
+            name: "department_id"
+        }
+    ]).then(function (response) {
+        connection.query("INSERT INTO roles (title, salary, department_id) values (?, ?, ?)", [response.title, response.salary, response.department_id], function (err, data) {
+            console.table(data);
+        })
+        trackerQuestions();
     })
 }
