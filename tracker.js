@@ -5,7 +5,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "",
+  password: "w!nd0wl!cker",
   database: "employees_db"
 });
 
@@ -26,11 +26,12 @@ connection.connect(function(err) {
             "Add Employee",
             "Update Employee Role",
             "Add Role",
+            "View Roles",
             "Exit"
         ],
         name: "choice"
     }).then(answers => {
-        console.log(answers.choice + "it is!");
+        console.log(answers.choice + " it is!");
         switch (answers.choice) {
             case "View Departments":
                 viewDepartments()
@@ -50,13 +51,15 @@ connection.connect(function(err) {
             case "Add Role":
                 addRole()
                 break;
-
+            case "View Roles":
+                viewRoles()
+                break;
         }
     })
   }
 
   function viewDepartments() {
-      connection.query("SELECT * FROM employee", function (err, data) {
+      connection.query("SELECT * FROM department", function (err, data) {
           console.table(data);
           trackerQuestions();
       })
@@ -65,10 +68,10 @@ connection.connect(function(err) {
   function addDepartment() {
       inquirer.prompt([{
           type: "input",
-          name: "Department",
+          name: "name",
           message: "Please enter the name of the department you wish to add"
       }, ]).then(function(res) {
-          connection.query("Put in department (name) values (?)", [res.department], function(err, data) {
+          connection.query('INSERT INTO department (name) VALUES (?)', [res.name], function(err, data) {
               if (err) throw (err);
               console.table("Success!");
               trackerQuestions();
@@ -94,7 +97,7 @@ function addEmployee() {
     name: "lastName",
     message: "Please enter the last name of the employee you wish to add"
 
-}
+},
 {
     type: "input",
     name: "roleId",
@@ -105,11 +108,11 @@ function addEmployee() {
     name: "managerId",
     message: "Please enter the ID of the manager of the employee you wish to add"
 }]).then(function(res) {
-    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id") VALUES (?, ?, ?, ?), [res.firstName, res.lastName, res.roleId, res.managerId], function(err, data) {
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)", [res.firstName, res.lastName, res.roleId, res.managerId], function(err, data) {
         if (err) throw err;
         console.table("Success!");
         trackerQuestions();
-    }
+    })
 })
 }
 
@@ -152,6 +155,13 @@ function addRole() {
         connection.query("INSERT INTO roles (title, salary, department_id) values (?, ?, ?)", [response.title, response.salary, response.department_id], function (err, data) {
             console.table(data);
         })
+        trackerQuestions();
+    })
+}
+
+function viewRoles() {
+    connection.query("SELECT * FROM role", function (err, data) {
+        console.table(data);
         trackerQuestions();
     })
 }
