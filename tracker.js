@@ -66,12 +66,14 @@ connection.connect(function(err) {
   }
 
   function addDepartment() {
-      inquirer.prompt([{
+      inquirer.prompt([
+          {
           type: "input",
           name: "name",
           message: "Please enter the name of the department you wish to add"
-      }, ]).then(function(res) {
-          connection.query('INSERT INTO department (name) VALUES (?)', [res.name], function(err, data) {
+      } ]).then(function(res) {
+          console.log(res, "response")
+          connection.query("INSERT INTO departments SET ?", res.name, function(err, data) {
               if (err) throw (err);
               console.table("Success!");
               trackerQuestions();
@@ -152,7 +154,7 @@ function addRole() {
             name: "department_id"
         }
     ]).then(function (response) {
-        connection.query("INSERT INTO roles (title, salary, department_id) values (?, ?, ?)", [response.title, response.salary, response.department_id], function (err, data) {
+        connection.query("INSERT INTO role (title, salary, department_id) values (?, ?, ?)", [response.title, response.salary, response.department_id], function (err, data) {
             console.table(data);
         })
         trackerQuestions();
